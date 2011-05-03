@@ -2,7 +2,7 @@
 
 return array(
 	'kohana-latest' => array(
-		'version'       => 'v3.1.2',
+		'version'       => 'v3.1.3',
 		'codename'      => 'hirondelle',
 		'status'        => 'stable',
 		'download'      => 'http://dev.kohanaframework.org/attachments/download/1654/kohana-3.1.3.zip',
@@ -10,7 +10,7 @@ return array(
 		'documentation' => 'http://kohanaframework.org/3.1/guide/',
 	),
 	'kohana-3.0.x' => array(
-		'version'       => 'v3.0.10',
+		'version'       => 'v3.0.11',
 		'codename'      => 'hierofalco',
 		'status'        => 'stable',
 		'download'      => 'http://dev.kohanaframework.org/attachments/download/1655/kohana-3.0.11.zip',
