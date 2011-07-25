@@ -16,6 +16,6 @@
 
 	<h3>I still need help!</h3>
 
-	<p>The Kohana <?php echo HTML::anchor('community', 'user community') ?> may be able to help you find the answer you are looking for.</p>
+	<p>The Kohana <?php echo HTML::anchor('http://forum.kohanaframework.org/', 'user community') ?> may be able to help you find the answer you are looking for.</p>
 	
 </div>
