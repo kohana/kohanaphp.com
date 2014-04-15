@@ -61,8 +61,24 @@ mb_substitute_character('none');
 // Set the default language
 I18n::lang('en-us');
 
-// Set Kohana environment
-Kohana::$environment = KOHANA::PRODUCTION;
+/**
+ * Replace the default HTTP protocol.
+ */
+if (isset($_SERVER['SERVER_PROTOCOL']))
+{
+	HTTP::$protocol = $_SERVER['SERVER_PROTOCOL'];
+}
+
+/**
+* Set Kohana::$environment if a 'KOHANA_ENV' environment variable has been supplied.
+*
+* Note: If you supply an invalid environment name, a PHP warning will be thrown
+* saying "Couldn't find constant Kohana::<INVALID_ENV_NAME>"
+*/
+if (isset($_SERVER['KOHANA_ENV']))
+{
+	Kohana::$environment = constant('Kohana::'.strtoupper($_SERVER['KOHANA_ENV']));
+}
 
 /**
  * Initialize Kohana, setting the default options.
@@ -83,9 +99,9 @@ Kohana::init(array(
 	'base_url'   => '/3.3/',
 	'index_file' => '',
 	'cache_life' => 300, // 5 minutes
-	'errors'     => FALSE,
-	'profile'    => FALSE,
-	'caching'    => TRUE
+	'errors'     => Kohana::$environment != Kohana::PRODUCTION,
+	'profile'    => Kohana::$environment != Kohana::PRODUCTION,
+	'caching'    => Kohana::$environment == Kohana::PRODUCTION
 ));
 
 /**
