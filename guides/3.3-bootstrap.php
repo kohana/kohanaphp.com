@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct script access.');
 
 // -- Environment setup --------------------------------------------------------
 
@@ -28,7 +28,7 @@ date_default_timezone_set('America/Chicago');
  * Set the default locale.
  *
  * @link http://kohanaframework.org/guide/using.configuration
- * @link http://www.php.net/manual/function.setlocale
+ * @link http://php.net/setlocale
  */
 setlocale(LC_ALL, 'en_US.utf-8');
 
@@ -36,39 +36,45 @@ setlocale(LC_ALL, 'en_US.utf-8');
  * Enable the Kohana auto-loader.
  *
  * @link http://kohanaframework.org/guide/using.autoloading
- * @link http://www.php.net/manual/function.spl-autoload-register
+ * @link http://php.net/spl-autoload-register
  */
 spl_autoload_register(array('Kohana', 'auto_load'));
 
 /**
- * Optionally, you can enable a compatibility auto-loader for use with
- * older modules that have not been updated for PSR-0.
- *
- * It is recommended to not enable this unless absolutely necessary.
- */
-//spl_autoload_register(array('Kohana', 'auto_load_lowercase'));
-
-/**
  * Enable the Kohana auto-loader for unserialization.
  *
- * @link http://www.php.net/manual/function.spl-autoload-call
- * @link http://www.php.net/manual/var.configuration#unserialize-callback-func
+ * @link http://php.net/spl-autoload-call
+ * @link http://php.net/var.configuration#unserialize-callback-func
  */
 ini_set('unserialize_callback_func', 'spl_autoload_call');
 
-// -- Configuration and initialization -----------------------------------------
 
 /**
- * Set the default language
+ * Set the mb_substitute_character to "none".
+ * 
+ * @link http://php.net/mb-substitute-character
  */
+mb_substitute_character('none');
+
+// -- Configuration and initialization -----------------------------------------
+
+// Set the default language
 I18n::lang('en-us');
 
 /**
- * Set Kohana::$environment if a 'KOHANA_ENV' environment variable has been supplied.
- *
- * Note: If you supply an invalid environment name, a PHP warning will be thrown
- * saying "Couldn't find constant Kohana::<INVALID_ENV_NAME>"
+ * Replace the default HTTP protocol.
  */
+if (isset($_SERVER['SERVER_PROTOCOL']))
+{
+	HTTP::$protocol = $_SERVER['SERVER_PROTOCOL'];
+}
+
+/**
+* Set Kohana::$environment if a 'KOHANA_ENV' environment variable has been supplied.
+*
+* Note: If you supply an invalid environment name, a PHP warning will be thrown
+* saying "Couldn't find constant Kohana::<INVALID_ENV_NAME>"
+*/
 if (isset($_SERVER['KOHANA_ENV']))
 {
 	Kohana::$environment = constant('Kohana::'.strtoupper($_SERVER['KOHANA_ENV']));
@@ -92,6 +98,10 @@ if (isset($_SERVER['KOHANA_ENV']))
 Kohana::init(array(
 	'base_url'   => '/3.3/',
 	'index_file' => '',
+	'cache_life' => 300, // 5 minutes
+	'errors'     => Kohana::$environment != Kohana::PRODUCTION,
+	'profile'    => Kohana::$environment != Kohana::PRODUCTION,
+	'caching'    => Kohana::$environment == Kohana::PRODUCTION
 ));
 
 /**
@@ -124,7 +134,7 @@ Kohana::modules(array(
 	'orm'        => MODPATH.'orm',        // Object Relationship Mapping
 	'unittest'   => MODPATH.'unittest',   // Unit testing
 	'userguide'  => MODPATH.'userguide',  // User guide and API documentation
-	));
+));
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
