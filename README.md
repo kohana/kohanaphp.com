@@ -1,4 +1,4 @@
-# Intro
+# Intro an amazing project
 View the website online at http://kohanaframework.org/
 
 # Deployment
