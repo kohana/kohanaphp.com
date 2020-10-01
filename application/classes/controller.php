@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') or exit('No direct script access.');
 
 class Controller extends Kohana_Controller
 {
